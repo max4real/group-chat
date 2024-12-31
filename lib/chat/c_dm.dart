@@ -55,6 +55,7 @@ class DMController extends GetxController {
         ChatModel chatModel = ChatModel.fromAPI(data: ackResponse["data"]);
         List<ChatModel> temp = [...chatList.value];
         temp.add(chatModel);
+        // temp.insert(0, chatModel);
         chatList.value = temp;
         txtText.clear();
         scrollToBottom();
@@ -85,6 +86,7 @@ class DMController extends GetxController {
         ChatModel chatModel = ChatModel.fromAPI(data: innerData);
         List<ChatModel> temp = [...chatList.value];
         temp.add(chatModel);
+        // temp.insert(0, chatModel);
         chatList.value = temp;
         scrollToBottom();
       } else {
@@ -107,7 +109,7 @@ class DMController extends GetxController {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
         scrollController.animateTo(
-          scrollController.position.maxScrollExtent,
+          scrollController.position.minScrollExtent,
           duration: Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );

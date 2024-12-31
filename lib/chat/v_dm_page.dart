@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:group_chat/chat/c_dm.dart';
 import 'package:get/get.dart';
+import 'package:group_chat/chat/m/chat_model.dart';
 import 'package:group_chat/shared/data_controller.dart';
 
 class DMPage extends StatelessWidget {
@@ -26,16 +27,19 @@ class DMPage extends StatelessWidget {
                 child: ValueListenableBuilder(
                   valueListenable: controller.chatList,
                   builder: (context, chatList, child) {
+                    List<ChatModel> reverseList = chatList.reversed.toList();
                     return ListView.builder(
-                      itemCount: chatList.length,
+                      itemCount: reverseList.length,
                       controller: controller.scrollController,
+                      reverse: true,
+                      shrinkWrap: true,
                       itemBuilder: (context, index) {
                         MainAxisAlignment alignment = MainAxisAlignment.end;
                         Color color = Colors.black;
                         bool xTime = false;
 
                         if (controller
-                            .checkDeviceID(chatList[index].deviceID)) {
+                            .checkDeviceID(reverseList[index].deviceID)) {
                           alignment = MainAxisAlignment.end;
                           color = Colors.blueGrey;
                           xTime = true;
@@ -44,6 +48,7 @@ class DMPage extends StatelessWidget {
                           color = Colors.grey;
                           xTime = false;
                         }
+                        final each = reverseList[index];
                         return Padding(
                           padding: EdgeInsets.only(bottom: 10),
                           child: Row(
@@ -52,7 +57,7 @@ class DMPage extends StatelessWidget {
                             children: [
                               if (xTime)
                                 Text(
-                                  formatDateTime(chatList[index].dateTime),
+                                  formatDateTime(each.dateTime),
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     color: Colors.black,
@@ -69,7 +74,7 @@ class DMPage extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Text(
-                                    chatList[index].message,
+                                    each.message,
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 14,
@@ -80,7 +85,7 @@ class DMPage extends StatelessWidget {
                               ),
                               if (!xTime)
                                 Text(
-                                  formatDateTime(chatList[index].dateTime),
+                                  formatDateTime(each.dateTime),
                                   style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     color: Colors.black,
