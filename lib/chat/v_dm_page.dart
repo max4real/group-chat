@@ -32,7 +32,6 @@ class DMPage extends StatelessWidget {
                       itemCount: reverseList.length,
                       controller: controller.scrollController,
                       reverse: true,
-                      shrinkWrap: true,
                       itemBuilder: (context, index) {
                         MainAxisAlignment alignment = MainAxisAlignment.end;
                         Color color = Colors.black;
